@@ -111,3 +111,19 @@ def test_pruning_and_deletion(rag_engine):
     res2 = rag_engine.query_hybrid("Is TLS 1.0 allowed?")
     for r in res2["results"]:
         assert "TLS 1.0" not in r["content"]
+
+def test_cdc_consumer_pipeline(rag_engine):
+    from cdc_consumer import CDCMutationConsumer
+    consumer = CDCMutationConsumer(engine=rag_engine)
+    event = {
+        "event_type": "DOCUMENT_MUTATION",
+        "doc_id": "cdc-stream-doc",
+        "title": "Streamed Doc",
+        "chunks": [
+            {"section": "s1", "content": "Initial CDC stream chunk payload.", "metadata": {}}
+        ]
+    }
+    res = consumer.process_event(event)
+    assert res["status"] == "committed"
+    assert res["report"]["version"] == 1
+    assert consumer.processed_events == 1
