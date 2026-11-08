@@ -120,3 +120,7 @@ curl http://localhost:8080/api/v1/health
 * `POST /api/v1/search` — Execute hybrid search across active versions with chunk-tagged cache lookup.
 * `POST /api/v1/cache/register` — Cache synthesis answers tied directly to source chunk IDs for surgical eviction.
 * `GET /api/v1/health` — Liveness & readiness probe.
+
+---
+
+Part of [my always-on agent stack](https://github.com/Amz34) · [Awesome Agent Infrastructure](https://github.com/Amz34/awesome-agent-infrastructure) (135 live-checked building blocks).
